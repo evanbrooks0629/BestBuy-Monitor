@@ -22,11 +22,10 @@ let isInStock = false;
 
 // gets the link to the product based on num matches, calls getStatus
 const monitorShop = search => {
-    const searchTags = search.split(" ");
-
     axios.get(`https://www.bestbuy.com/site/searchpage.jsp?st=${search}`)
     .then(response => {
 
+        const searchTags = search.split(" ");
         const $ = cheerio.load(response.data);
         let products = [];
         let links = []; 
