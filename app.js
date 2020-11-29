@@ -89,8 +89,8 @@ const getStatus = link => {
         console.log("The price of this product is " + price);
         if (currPrice != 0) {
             if (price < currPrice) {
-                isOnSale = true;
                 currPrice = price;
+                isOnSale = true;
             }
         } else {
             currPrice = price;
@@ -104,11 +104,14 @@ const getStatus = link => {
 
 // runs monitor every 100 ms
 runMonitor = async search => {
-    while (!isOnSale) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        monitorShop(search);
+    while (true) {
+        while (!isOnSale) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            monitorShop(search);
+        }
+        console.log("Product is on sale at " + currPrice + "!");
+        isOnSale = false;
     }
-    console.log("Product is on sale at " + currPrice + "!");
 }
 
 let search = prepareSearch(product);
